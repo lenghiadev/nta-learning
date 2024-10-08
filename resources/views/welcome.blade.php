@@ -20,6 +20,9 @@
             <li class="nav-item">
                 <a class="nav-link active" href="/">Trang chủ</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -27,7 +30,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm-8">
-            <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <div class="image-prefix">
