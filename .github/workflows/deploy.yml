@@ -19,6 +19,11 @@ jobs:
           echo "EC2_USER=${{ secrets.EC2_USER }}" >> $GITHUB_ENV
           echo "${{ secrets.EC2_KEY }}" > private_key.pem
 
+      - name: Debug Environment Variables
+        run: |
+          echo "EC2_HOST=${EC2_HOST}"
+          echo "EC2_USER=${EC2_USER}"
+
       - name: Deploy to EC2
         run: |
           chmod 600 private_key.pem
