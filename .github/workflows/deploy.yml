@@ -15,23 +15,26 @@ jobs:
 
       - name: Setup SSH Key
         run: |
+          echo "${{ secrets.EC2_KEY }}" | tr -d '\r' > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Setup Environment Variables
+        run: |
           echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> $GITHUB_ENV
           echo "EC2_USER=${{ secrets.EC2_USER }}" >> $GITHUB_ENV
-          echo "${{ secrets.EC2_KEY }}" > private_key.pem
 
       - name: Debug Environment Variables
         run: |
           echo "EC2_HOST=${EC2_HOST}"
           echo "EC2_USER=${EC2_USER}"
+          test -f private_key.pem && echo "SSH Key exists" || echo "SSH Key is missing!"
 
       - name: Deploy to EC2
         run: |
-          chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no "$EC2_USER@$EC2_HOST" << EOF
+          ssh -i private_key.pem -o StrictHostKeyChecking=no "$EC2_USER@$EC2_HOST" << 'EOF'
             cd /var/www/html/nta-learning
             git pull origin main
             npm install
             npm run build
-
           EOF
           rm -rf private_key.pem
