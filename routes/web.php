@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
+Route::get('/health-check', function () {
+    return response()->json(['status' => 'OK'], 200);
+});
+
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
