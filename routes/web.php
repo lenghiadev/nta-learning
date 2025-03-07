@@ -22,6 +22,14 @@ Route::get('/health-check', function () {
     return response()->json(['status' => 'OK'], 200);
 });
 
+Route::get('/cpu-stress', function () {
+    $result = 0;
+    for ($i = 0; $i < 1000000000; $i++) {
+        $result += sqrt($i);
+    }
+    return "CPU stress completed. Result: $result";
+});
+
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
